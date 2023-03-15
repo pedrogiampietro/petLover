@@ -12,8 +12,16 @@ import { Ionicons } from '@expo/vector-icons';
 import { Card } from '../../components/Card';
 import { FilterModal } from '../../components/FilterModal';
 
+type Filters = {
+	gender?: string;
+	priceRange?: [number, number];
+	searchTerm?: string;
+	state?: string;
+};
+
 export function Home() {
 	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [filters, setFilters] = useState<Filters>({});
 
 	const handleOpenModal = () => {
 		setIsModalVisible(true);
@@ -22,6 +30,10 @@ export function Home() {
 	const handleCloseModal = () => {
 		setIsModalVisible(false);
 	};
+
+	function handleFilters(filters: any) {
+		setFilters(filters);
+	}
 
 	return (
 		<View style={styles.container}>
@@ -43,20 +55,41 @@ export function Home() {
 						<FilterModal
 							isVisible={isModalVisible}
 							onClose={handleCloseModal}
+							onApplyFilters={handleFilters}
 						/>
 					</View>
 					<View style={styles.filtersContainer}>
 						<Text style={styles.filtersTitle}>Filtros:</Text>
 						<View style={styles.filterTags}>
-							<TouchableOpacity style={styles.filterTag}>
-								<Text style={styles.filterTagText}>Tag 1</Text>
-							</TouchableOpacity>
-							<TouchableOpacity style={styles.filterTag}>
-								<Text style={styles.filterTagText}>Tag 2</Text>
-							</TouchableOpacity>
-							<TouchableOpacity style={styles.filterTag}>
-								<Text style={styles.filterTagText}>Tag 3</Text>
-							</TouchableOpacity>
+							{filters.gender && (
+								<TouchableOpacity style={styles.filterTag}>
+									<Text style={styles.filterTagText}>
+										{filters.gender}
+									</Text>
+								</TouchableOpacity>
+							)}
+							{filters.priceRange && (
+								<TouchableOpacity style={styles.filterTag}>
+									<Text
+										style={styles.filterTagText}
+									>{`R$ ${filters.priceRange[0]} - R$ ${filters.priceRange[1]}`}</Text>
+								</TouchableOpacity>
+							)}
+							{filters.searchTerm && (
+								<TouchableOpacity style={styles.filterTag}>
+									<Text style={styles.filterTagText}>
+										{filters.searchTerm}
+									</Text>
+								</TouchableOpacity>
+							)}
+
+							{filters.state && (
+								<TouchableOpacity style={styles.filterTag}>
+									<Text style={styles.filterTagText}>
+										{filters.state}
+									</Text>
+								</TouchableOpacity>
+							)}
 						</View>
 					</View>
 

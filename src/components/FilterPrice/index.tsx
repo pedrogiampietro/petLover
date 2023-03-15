@@ -1,10 +1,7 @@
-import { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
-export function PriceFilter() {
-	const [priceRange, setPriceRange] = useState<number[]>([0, 100]);
-
+export function PriceFilter({ priceRange, setPriceRange }: any) {
 	const handlePriceRangeChange = (values: number[]) => {
 		setPriceRange([values[0], values[1]]);
 	};

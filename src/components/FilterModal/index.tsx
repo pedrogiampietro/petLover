@@ -13,8 +13,11 @@ import { Feather } from '@expo/vector-icons';
 import { PriceFilter } from '../FilterPrice';
 import { RadioButton } from '../RadioButton';
 
-export function FilterModal({ isVisible, onClose }: any) {
+export function FilterModal({ isVisible, onClose, onApplyFilters }: any) {
 	const [gender, setGender] = useState<string>('');
+	const [search, setSearch] = useState<string>('');
+	const [priceRange, setPriceRange] = useState<number[]>([0, 100]);
+	const [state, setState] = useState<string>('');
 
 	return (
 		<Modal
@@ -49,16 +52,17 @@ export function FilterModal({ isVisible, onClose }: any) {
 							placeholder="Buscar ..."
 							placeholderTextColor="#7D7D7D"
 							keyboardType="default"
-							// value={email}
-							// onChangeText={onEmailChange}
-							// editable={!loading}
+							value={search}
+							onChangeText={setSearch}
 						/>
 					</View>
 
 					<Picker
 						selectedValue={null}
 						style={{ height: 50, width: '100%', marginBottom: 20 }}
-						onValueChange={(itemValue, itemIndex) => {}}
+						onValueChange={(itemValue) => {
+							setState(itemValue);
+						}}
 					>
 						<Picker.Item label="Buscar por estado" value={null} />
 						<Picker.Item label="São Paulo" value="SP" />
@@ -68,7 +72,10 @@ export function FilterModal({ isVisible, onClose }: any) {
 
 					<Text style={styles.titleText}>Faixa de preço:</Text>
 
-					<PriceFilter />
+					<PriceFilter
+						setPriceRange={setPriceRange}
+						priceRange={priceRange}
+					/>
 
 					<Text style={styles.titleText}>Genero</Text>
 					<RadioButton
@@ -85,7 +92,16 @@ export function FilterModal({ isVisible, onClose }: any) {
 					}}
 				>
 					<TouchableOpacity
-						onPress={() => {}}
+						onPress={() => {
+							const filters = {
+								searchTerm: search,
+								priceRange: priceRange,
+								gender: gender,
+								state: state,
+							};
+							onApplyFilters(filters);
+							onClose();
+						}}
 						style={{
 							backgroundColor: '#40B5A2',
 							padding: 20,
