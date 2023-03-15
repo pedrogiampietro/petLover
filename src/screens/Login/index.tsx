@@ -10,7 +10,6 @@ import {
 	TextInput,
 	TouchableOpacity,
 	ScrollView,
-	ImageBackground,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Feather } from '@expo/vector-icons';
@@ -50,6 +49,7 @@ export function Login() {
 
 		try {
 			// await signIn(email, password);
+			navigate('Home' as never);
 		} catch (err: any) {
 			console.error(err);
 		} finally {
@@ -187,7 +187,7 @@ export function Login() {
 							<TouchableOpacity
 								style={styles.button}
 								activeOpacity={0.6}
-								onPress={onLogin}
+								onPress={() => navigate('Register' as never)}
 							>
 								{!loading ? (
 									<Text style={styles.buttonText}>
