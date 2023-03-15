@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
 	},
 	filterButton: {
 		marginLeft: 'auto',
-		backgroundColor: '#00aeef',
+		backgroundColor: '#40B5A2',
 		paddingHorizontal: 16,
 		paddingVertical: 8,
 		borderRadius: 4,
@@ -135,9 +135,9 @@ const styles = StyleSheet.create({
 		marginTop: 8,
 	},
 	filterTag: {
-		backgroundColor: '#00aeef',
+		backgroundColor: '#d9dcdd',
 		paddingHorizontal: 16,
-		paddingVertical: 8,
+		paddingVertical: 3,
 		borderRadius: 4,
 		marginRight: 8,
 		marginBottom: 8,
