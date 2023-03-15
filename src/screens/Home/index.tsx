@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	StyleSheet,
 	Text,
@@ -10,8 +10,19 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Card } from '../../components/Card';
+import { FilterModal } from '../../components/FilterModal';
 
 export function Home() {
+	const [isModalVisible, setIsModalVisible] = useState(false);
+
+	const handleOpenModal = () => {
+		setIsModalVisible(true);
+	};
+
+	const handleCloseModal = () => {
+		setIsModalVisible(false);
+	};
+
 	return (
 		<View style={styles.container}>
 			<ScrollView>
@@ -23,9 +34,16 @@ export function Home() {
 							color="#333"
 						/>
 						<Text style={styles.location}>São Paulo</Text>
-						<TouchableOpacity style={styles.filterButton}>
+						<TouchableOpacity
+							style={styles.filterButton}
+							onPress={handleOpenModal}
+						>
 							<Text style={styles.filterButtonText}>Filtrar</Text>
 						</TouchableOpacity>
+						<FilterModal
+							isVisible={isModalVisible}
+							onClose={handleCloseModal}
+						/>
 					</View>
 					<View style={styles.filtersContainer}>
 						<Text style={styles.filtersTitle}>Filtros:</Text>
