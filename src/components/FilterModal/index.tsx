@@ -18,6 +18,7 @@ export function FilterModal({ isVisible, onClose, onApplyFilters }: any) {
 	const [search, setSearch] = useState<string>('');
 	const [priceRange, setPriceRange] = useState<number[]>([0, 100]);
 	const [state, setState] = useState<string>('');
+	const [selectedOption, setSelectedOption] = useState<string>('');
 
 	return (
 		<Modal
@@ -58,7 +59,7 @@ export function FilterModal({ isVisible, onClose, onApplyFilters }: any) {
 					</View>
 
 					<Picker
-						selectedValue={null}
+						selectedValue={state}
 						style={{ height: 50, width: '100%', marginBottom: 20 }}
 						onValueChange={(itemValue) => {
 							setState(itemValue);
@@ -81,6 +82,8 @@ export function FilterModal({ isVisible, onClose, onApplyFilters }: any) {
 					<RadioButton
 						options={['Macho', 'Femea']}
 						onSelect={setGender}
+						selectedOption={selectedOption}
+						setSelectedOption={setSelectedOption}
 					/>
 				</View>
 

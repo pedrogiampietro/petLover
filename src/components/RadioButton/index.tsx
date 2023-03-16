@@ -5,14 +5,19 @@ import { MaterialIcons } from '@expo/vector-icons';
 interface RadioButtonProps {
 	options: string[];
 	onSelect: (option: string) => void;
+	setSelectedOption: (option: string) => void;
+	selectedOption: string;
 }
 
-export function RadioButton({ options, onSelect }: RadioButtonProps) {
-	const [selectedOption, setSelectedOption] = useState<string>('');
-
+export function RadioButton({
+	options,
+	onSelect,
+	selectedOption,
+	setSelectedOption,
+}: RadioButtonProps) {
 	const handleOptionSelect = (option: string) => {
-		setSelectedOption(option);
 		onSelect(option);
+		setSelectedOption(option);
 	};
 
 	return (
