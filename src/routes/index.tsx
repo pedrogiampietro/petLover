@@ -6,6 +6,7 @@ import { Login } from '../screens/Login';
 import { Home } from '../screens/Home';
 import { Register } from '../screens/Register';
 import { DetailPage } from '../screens/DetailPage';
+import { RequestPage } from '../screens/RequestPage';
 
 const AppStack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const AuthRoutes: React.FC = () => (
 		<AppStack.Screen name="Register" component={Register} />
 		<AppStack.Screen name="Home" component={Home} />
 		<AppStack.Screen name="DetailPage" component={DetailPage} />
+		<AppStack.Screen name="RequestPage" component={RequestPage} />
 	</AppStack.Navigator>
 );
 

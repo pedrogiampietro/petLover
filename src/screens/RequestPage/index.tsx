@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
 	View,
 	Text,
@@ -6,6 +8,7 @@ import {
 	Platform,
 	ScrollView,
 	TouchableOpacity,
+	Switch,
 	StyleSheet,
 } from 'react-native';
 
@@ -13,21 +16,38 @@ import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-export function DetailPage() {
+const availableHours = [
+	{
+		id: 1,
+		day: 'segunda-feira',
+		hour: '7am - 8am',
+	},
+
+	{
+		id: 2,
+		day: 'segunda-feira',
+		hour: '11am - 15pm',
+	},
+	{
+		id: 3,
+		day: 'sexta-feira',
+		hour: '18pm - 23pm',
+	},
+];
+
+export function RequestPage() {
 	const { navigate } = useNavigation();
+	const [checkedItems, setCheckedItems] = useState([]);
 
 	return (
 		<View style={styles.container}>
 			<ScrollView>
 				<View style={styles.viewContainer}>
 					<View style={styles.header}>
-						<Image
-							source={require('../../assets/dog_card_1.png')}
-							style={styles.background}
-						/>
+						<View style={styles.background} />
 						<TouchableOpacity
 							style={styles.backButton}
-							onPress={() => navigate('Home' as never)}
+							onPress={() => navigate('DetailPage' as never)}
 						>
 							<Ionicons
 								name="arrow-back"
@@ -40,32 +60,11 @@ export function DetailPage() {
 						</View>
 					</View>
 					<View style={styles.info}>
-						<Text style={styles.name}>Jean</Text>
-						<View
-							style={{
-								flexDirection: 'row',
-								alignItems: 'center',
-								justifyContent: 'space-around',
-							}}
-						>
-							<View style={{ alignItems: 'center' }}>
-								<Text style={[styles.title, styles.gray]}>
-									Idade:
-								</Text>
-								<Text>4 months</Text>
-							</View>
-							<View style={{ alignItems: 'center' }}>
-								<Text style={[styles.title, styles.gray]}>
-									Porte:
-								</Text>
-								<Text>P</Text>
-							</View>
-							<View style={{ alignItems: 'center' }}>
-								<Text style={[styles.title, styles.gray]}>
-									Sexo:
-								</Text>
-								<Text>Fêmea</Text>
-							</View>
+						<View style={styles.confirmWrapper}>
+							<Text style={styles.infoText}>
+								Por favor complete e confirme a informação
+								abaixo.
+							</Text>
 						</View>
 
 						<Text style={[styles.title, styles.gray]}>
@@ -79,17 +78,42 @@ export function DetailPage() {
 						<Text style={[styles.title, styles.gray]}>
 							Horas/dias disponíveis:
 						</Text>
-						<Text>
-							Segunda: 7AM - 8AM{' '}
-							<Text style={{ color: 'red' }}>Reservada</Text>
-						</Text>
-						<Text>Terça: 7AM - 8AM</Text>
-						<Text>Quarta: 7AM - 8AM</Text>
-						<Text>
-							Quinta: 7AM - 8AM{' '}
-							<Text style={{ color: 'red' }}>Reservada</Text>
-						</Text>
-						<Text>Sexta: 7AM - 8AM</Text>
+						<View>
+							<Text style={[styles.title, styles.gray]}>
+								Horas/dias disponíveis:
+							</Text>
+							{availableHours.map((item) => (
+								<View
+									key={item.id}
+									style={{
+										flexDirection: 'row',
+										alignItems: 'center',
+									}}
+								>
+									<Switch
+										value={checkedItems.includes(item.id)}
+										onValueChange={() =>
+											setCheckedItems((prevState) =>
+												prevState.includes(item.id)
+													? prevState.filter(
+															(id) =>
+																id !== item.id
+													  )
+													: [...prevState, item.id]
+											)
+										}
+									/>
+									<Text style={{ marginLeft: 10 }}>
+										{item.day}: {item.hour}{' '}
+										{checkedItems.includes(item.id) && (
+											<Text style={{ color: 'red' }}>
+												Reservada
+											</Text>
+										)}
+									</Text>
+								</View>
+							))}
+						</View>
 
 						{/* <Text>
 							Please note that, this service is not one-time. It
@@ -139,11 +163,11 @@ export function DetailPage() {
 									style={styles.button}
 									activeOpacity={0.6}
 									onPress={() =>
-										navigate('RequestPage' as never)
+										navigate('DetailPage' as never)
 									}
 								>
 									<Text style={styles.buttonText}>
-										Criar Requisição
+										Enviar Requisição
 									</Text>
 								</TouchableOpacity>
 							</View>
@@ -158,7 +182,7 @@ export function DetailPage() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#40B5A2',
 		borderTopLeftRadius: 20,
 		borderTopRightRadius: 20,
 		overflow: 'hidden',
@@ -171,7 +195,7 @@ const styles = StyleSheet.create({
 	},
 	background: {
 		width: '100%',
-		height: 380,
+		height: 180,
 	},
 	backButton: {
 		position: 'absolute',
@@ -198,6 +222,10 @@ const styles = StyleSheet.create({
 		borderTopLeftRadius: 20,
 		borderTopRightRadius: 20,
 	},
+	confirmWrapper: {
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
 	title: {
 		fontWeight: 'bold',
 		marginVertical: 5,
@@ -207,9 +235,9 @@ const styles = StyleSheet.create({
 		textTransform: 'uppercase',
 		color: '#aaa',
 	},
-	name: {
+	infoText: {
 		fontWeight: 'bold',
-		fontSize: 30,
+		fontSize: 13,
 	},
 	details: {
 		marginVertical: 20,

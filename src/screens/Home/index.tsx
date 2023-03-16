@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
 	viewContainer: {
 		flex: 1,
 		paddingVertical:
-			Platform.OS === 'android' ? RNStatusBar.currentHeight + 40 : 40,
+			Platform.OS === 'android' ? RNStatusBar.currentHeight + 5 : 5,
 	},
 	header: {
 		flexDirection: 'row',
