@@ -81,7 +81,6 @@ export function Home() {
 						/>
 					</View>
 					<View style={styles.filtersContainer}>
-						<Text style={styles.filtersTitle}>Filtros:</Text>
 						<View style={styles.filterTags}>
 							{filters.gender && (
 								<TouchableOpacity style={styles.filterTag}>
@@ -157,7 +156,7 @@ export function Home() {
 
 					<View style={styles.card}>
 						{[1, 2, 3, 4].map((_, index) => {
-							return <Card key={index} />;
+							return <Card key={index} id={index} />;
 						})}
 					</View>
 

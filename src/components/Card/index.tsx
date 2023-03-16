@@ -3,9 +3,17 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
-export function Card() {
+import { useNavigation } from '@react-navigation/native';
+
+export function Card({ id }: any) {
+	const { navigate } = useNavigation();
+
+	const handleDetailPage = () => {
+		navigate('DetailPage' as never, { id } as never);
+	};
+
 	return (
-		<View style={styles.container}>
+		<TouchableOpacity style={styles.container} onPress={handleDetailPage}>
 			<TouchableOpacity style={styles.saveIconContainer}>
 				<Fontisto name="favorite" size={28} color="white" />
 			</TouchableOpacity>
@@ -33,7 +41,7 @@ export function Card() {
 					</Text>
 				</View>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 }
 
