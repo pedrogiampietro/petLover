@@ -35,19 +35,19 @@ export function DetailPage() {
 								justifyContent: 'space-around',
 							}}
 						>
-							<View>
+							<View style={{ alignItems: 'center' }}>
 								<Text style={[styles.title, styles.gray]}>
 									Idade:
 								</Text>
 								<Text>12</Text>
 							</View>
-							<View>
+							<View style={{ alignItems: 'center' }}>
 								<Text style={[styles.title, styles.gray]}>
 									Porte:
 								</Text>
 								<Text>M</Text>
 							</View>
-							<View>
+							<View style={{ alignItems: 'center' }}>
 								<Text style={[styles.title, styles.gray]}>
 									Sexo:
 								</Text>
@@ -62,16 +62,54 @@ export function DetailPage() {
 						<Text style={[styles.title, styles.gray]}>
 							Tipo de serviço:
 						</Text>
-						<Text></Text>
+						<Text>Caminhada</Text>
 						<Text style={[styles.title, styles.gray]}>
 							Horas/dias disponíveis:
 						</Text>
-						<Text></Text>
-					</View>
-					<View style={styles.details}>
-						{/* // insira o avatar, nome e e-mail do proprietário aqui */}
-						<View style={styles.button}>
-							<Text>Criar solicitação</Text>
+						<Text>
+							Segunda: 7AM - 8AM{' '}
+							<Text style={{ color: 'red' }}>Reservada</Text>
+						</Text>
+						<Text>Terça: 7AM - 8AM</Text>
+						<Text>Quarta: 7AM - 8AM</Text>
+						<Text>
+							Quinta: 7AM - 8AM{' '}
+							<Text style={{ color: 'red' }}>Reservada</Text>
+						</Text>
+						<Text>Sexta: 7AM - 8AM</Text>
+
+						{/* <Text>
+							Please note that, this service is not one-time. It
+							will occur in every week.
+						</Text> */}
+
+						<View>
+							<Text style={[styles.title, styles.gray]}>
+								Valor por serviço
+							</Text>
+							<Text>R$ 12,00/hr</Text>
+						</View>
+
+						<View style={styles.details}>
+							<View
+								style={{
+									flexDirection: 'row',
+									alignItems: 'center',
+									gap: 10,
+								}}
+							>
+								<Image
+									source={{
+										uri: 'http://github.com/pedrogiampietro.png',
+									}}
+									style={styles.profile}
+								/>
+								<Text>Pedro Giampietro</Text>
+							</View>
+
+							<View style={styles.button}>
+								<Text>Criar solicitação</Text>
+							</View>
 						</View>
 					</View>
 				</View>
@@ -96,7 +134,7 @@ const styles = StyleSheet.create({
 	},
 	background: {
 		width: '100%',
-		height: 399,
+		height: 380,
 	},
 	backButton: {
 		position: 'absolute',
@@ -134,8 +172,13 @@ const styles = StyleSheet.create({
 		fontSize: 30,
 	},
 	details: {
-		padding: 20,
+		marginVertical: 20,
 		backgroundColor: 'white',
+	},
+	profile: {
+		width: 64,
+		height: 64,
+		borderRadius: 50,
 	},
 	button: {
 		backgroundColor: 'blue',
