@@ -1,36 +1,65 @@
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-
 import { Ionicons } from '@expo/vector-icons';
-
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 export function MenuBottom() {
 	const { navigate } = useNavigation();
+	const route = useRoute();
+	const [activePage, setActivePage] = useState('');
+
+	useEffect(() => {
+		setActivePage(route.name);
+	}, [route]);
 
 	return (
 		<View style={styles.bottomMenu}>
 			<TouchableOpacity
-				style={styles.bottomMenuItem}
-				onPress={() => navigate('Home' as never)}
+				style={[
+					styles.bottomMenuItem,
+					activePage === 'Home' && styles.activeMenuItem,
+				]}
+				onPress={() => {
+					navigate('Home' as never);
+				}}
 			>
 				<Ionicons name="home" size={24} color="#333" />
 				<Text style={styles.bottomMenuItemText}>Home</Text>
 			</TouchableOpacity>
 			<TouchableOpacity
-				style={styles.bottomMenuItem}
-				onPress={() => navigate('Map' as never)}
+				style={[
+					styles.bottomMenuItem,
+					activePage === 'Map' && styles.activeMenuItem,
+				]}
+				onPress={() => {
+					navigate('Map' as never);
+				}}
 			>
 				<Ionicons name="map" size={24} color="#333" />
 				<Text style={styles.bottomMenuItemText}>Mapa</Text>
 			</TouchableOpacity>
 			<TouchableOpacity
-				style={styles.bottomMenuItem}
-				onPress={() => navigate('FavoriteDogProfilePage' as never)}
+				style={[
+					styles.bottomMenuItem,
+					activePage === 'FavoriteDogProfilePage' &&
+						styles.activeMenuItem,
+				]}
+				onPress={() => {
+					navigate('FavoriteDogProfilePage' as never);
+				}}
 			>
 				<Ionicons name="heart" size={24} color="#333" />
 				<Text style={styles.bottomMenuItemText}>Favoritos</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.bottomMenuItem}>
+			<TouchableOpacity
+				style={[
+					styles.bottomMenuItem,
+					activePage === 'Profile' && styles.activeMenuItem,
+				]}
+				onPress={() => {
+					navigate('Profile' as never);
+				}}
+			>
 				<Ionicons name="person" size={24} color="#333" />
 				<Text style={styles.bottomMenuItemText}>Perfil</Text>
 			</TouchableOpacity>
@@ -57,5 +86,9 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 		fontWeight: 'bold',
 		marginTop: 4,
+	},
+	activeMenuItem: {
+		borderBottomWidth: 2,
+		borderBottomColor: '#333',
 	},
 });
