@@ -13,7 +13,7 @@ import { FilterModal } from '../../components/FilterModal';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { MenuBottom } from '../../components/MenuBottom';
 
 type Filters = {
 	gender?: string;
@@ -26,7 +26,6 @@ type Filters = {
 export function Home() {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [filters, setFilters] = useState<Filters>({});
-	const { navigate } = useNavigation();
 
 	const handleOpenModal = () => {
 		setIsModalVisible(true);
@@ -48,147 +47,110 @@ export function Home() {
 
 	return (
 		<View style={styles.container}>
-			<ScrollView>
-				<View style={styles.viewContainer}>
-					<View style={styles.header}>
-						<Ionicons
-							name="location-sharp"
-							size={32}
-							color="#333"
-						/>
-						<Text style={styles.location}>São Paulo</Text>
-						<TouchableOpacity
-							style={styles.filterButton}
-							onPress={handleOpenModal}
-						>
-							<View style={styles.filterButtonContainer}>
-								<AntDesign
-									name="filter"
-									size={28}
-									color="black"
-								/>
-								{Object.keys(filters).length > 0 && (
-									<View style={styles.filterCount}>
-										<Text style={styles.filterCountText}>
-											{Object.keys(filters).length}
-										</Text>
-									</View>
-								)}
-							</View>
-						</TouchableOpacity>
-						<FilterModal
-							isVisible={isModalVisible}
-							onClose={handleCloseModal}
-							onApplyFilters={handleFilters}
-						/>
-					</View>
-					<View style={styles.filtersContainer}>
-						<View style={styles.filterTags}>
-							{filters.gender && (
-								<TouchableOpacity style={styles.filterTag}>
-									<Text style={styles.filterTagText}>
-										{filters.gender}
+			<View style={styles.viewContainer}>
+				<View style={styles.header}>
+					<Ionicons name="location-sharp" size={32} color="#333" />
+					<Text style={styles.location}>São Paulo</Text>
+					<TouchableOpacity
+						style={styles.filterButton}
+						onPress={handleOpenModal}
+					>
+						<View style={styles.filterButtonContainer}>
+							<AntDesign name="filter" size={28} color="black" />
+							{Object.keys(filters).length > 0 && (
+								<View style={styles.filterCount}>
+									<Text style={styles.filterCountText}>
+										{Object.keys(filters).length}
 									</Text>
-									<TouchableOpacity
-										onPress={() => removeFilter('gender')}
-									>
-										<MaterialIcons
-											name="close"
-											size={16}
-											color="black"
-										/>
-									</TouchableOpacity>
-								</TouchableOpacity>
-							)}
-							{filters.priceRange && (
-								<TouchableOpacity style={styles.filterTag}>
-									<Text
-										style={styles.filterTagText}
-									>{`R$ ${filters.priceRange[0]} - R$ ${filters.priceRange[1]}`}</Text>
-									<TouchableOpacity
-										onPress={() =>
-											removeFilter('priceRange')
-										}
-									>
-										<MaterialIcons
-											name="close"
-											size={16}
-											color="black"
-										/>
-									</TouchableOpacity>
-								</TouchableOpacity>
-							)}
-							{filters.searchTerm && (
-								<TouchableOpacity style={styles.filterTag}>
-									<Text style={styles.filterTagText}>
-										{filters.searchTerm}
-									</Text>
-									<TouchableOpacity
-										onPress={() =>
-											removeFilter('searchTerm')
-										}
-									>
-										<MaterialIcons
-											name="close"
-											size={16}
-											color="black"
-										/>
-									</TouchableOpacity>
-								</TouchableOpacity>
-							)}
-
-							{filters.state && (
-								<TouchableOpacity style={styles.filterTag}>
-									<Text style={styles.filterTagText}>
-										{filters.state}
-									</Text>
-									<TouchableOpacity
-										onPress={() => removeFilter('state')}
-									>
-										<MaterialIcons
-											name="close"
-											size={16}
-											color="black"
-										/>
-									</TouchableOpacity>
-								</TouchableOpacity>
+								</View>
 							)}
 						</View>
-					</View>
+					</TouchableOpacity>
+					<FilterModal
+						isVisible={isModalVisible}
+						onClose={handleCloseModal}
+						onApplyFilters={handleFilters}
+					/>
+				</View>
+				<View style={styles.filtersContainer}>
+					<View style={styles.filterTags}>
+						{filters.gender && (
+							<TouchableOpacity style={styles.filterTag}>
+								<Text style={styles.filterTagText}>
+									{filters.gender}
+								</Text>
+								<TouchableOpacity
+									onPress={() => removeFilter('gender')}
+								>
+									<MaterialIcons
+										name="close"
+										size={16}
+										color="black"
+									/>
+								</TouchableOpacity>
+							</TouchableOpacity>
+						)}
+						{filters.priceRange && (
+							<TouchableOpacity style={styles.filterTag}>
+								<Text
+									style={styles.filterTagText}
+								>{`R$ ${filters.priceRange[0]} - R$ ${filters.priceRange[1]}`}</Text>
+								<TouchableOpacity
+									onPress={() => removeFilter('priceRange')}
+								>
+									<MaterialIcons
+										name="close"
+										size={16}
+										color="black"
+									/>
+								</TouchableOpacity>
+							</TouchableOpacity>
+						)}
+						{filters.searchTerm && (
+							<TouchableOpacity style={styles.filterTag}>
+								<Text style={styles.filterTagText}>
+									{filters.searchTerm}
+								</Text>
+								<TouchableOpacity
+									onPress={() => removeFilter('searchTerm')}
+								>
+									<MaterialIcons
+										name="close"
+										size={16}
+										color="black"
+									/>
+								</TouchableOpacity>
+							</TouchableOpacity>
+						)}
 
+						{filters.state && (
+							<TouchableOpacity style={styles.filterTag}>
+								<Text style={styles.filterTagText}>
+									{filters.state}
+								</Text>
+								<TouchableOpacity
+									onPress={() => removeFilter('state')}
+								>
+									<MaterialIcons
+										name="close"
+										size={16}
+										color="black"
+									/>
+								</TouchableOpacity>
+							</TouchableOpacity>
+						)}
+					</View>
+				</View>
+				<ScrollView>
 					<View style={styles.card}>
 						{[1, 2, 3, 4].map((_, index) => {
 							return <Card key={index} id={index} />;
 						})}
 					</View>
+				</ScrollView>
 
-					<View style={styles.bottomMenu}>
-						<TouchableOpacity style={styles.bottomMenuItem}>
-							<Ionicons name="home" size={24} color="#333" />
-							<Text style={styles.bottomMenuItemText}>Home</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={styles.bottomMenuItem}
-							onPress={() => navigate('Map' as never)}
-						>
-							<Ionicons name="map" size={24} color="#333" />
-							<Text style={styles.bottomMenuItemText}>Mapa</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.bottomMenuItem}>
-							<Ionicons name="heart" size={24} color="#333" />
-							<Text style={styles.bottomMenuItemText}>
-								Favoritos
-							</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.bottomMenuItem}>
-							<Ionicons name="person" size={24} color="#333" />
-							<Text style={styles.bottomMenuItemText}>
-								Perfil
-							</Text>
-						</TouchableOpacity>
-					</View>
-				</View>
-			</ScrollView>
+				<MenuBottom />
+			</View>
 		</View>
 	);
 }
@@ -201,7 +163,7 @@ const styles = StyleSheet.create({
 	},
 	viewContainer: {
 		flex: 1,
-		paddingVertical:
+		paddingTop:
 			Platform.OS === 'android' ? RNStatusBar.currentHeight + 5 : 5,
 	},
 	header: {
@@ -287,27 +249,5 @@ const styles = StyleSheet.create({
 	cardDescription: {
 		marginTop: 8,
 		fontSize: 16,
-	},
-	bottomMenu: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		position: 'absolute',
-		bottom: 0,
-		left: 0,
-		right: 0,
-		backgroundColor: '#fff',
-		paddingHorizontal: 16,
-		paddingVertical: 8,
-		borderTopWidth: 1,
-		borderTopColor: '#ccc',
-	},
-	bottomMenuItem: {
-		alignItems: 'center',
-	},
-	bottomMenuItemText: {
-		fontSize: 12,
-		fontWeight: 'bold',
-		marginTop: 4,
 	},
 });
