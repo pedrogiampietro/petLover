@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -6,16 +6,29 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 export function Card({ id }: any) {
+	const [favorito, setFavorito] = useState(false);
+
 	const { navigate } = useNavigation();
 
 	const handleDetailPage = () => {
 		navigate('DetailPage' as never, { id } as never);
 	};
 
+	const handleFavorito = () => {
+		setFavorito(!favorito);
+	};
+
 	return (
 		<TouchableOpacity style={styles.container} onPress={handleDetailPage}>
-			<TouchableOpacity style={styles.saveIconContainer}>
-				<Fontisto name="favorite" size={28} color="white" />
+			<TouchableOpacity
+				style={styles.saveIconContainer}
+				onPress={handleFavorito}
+			>
+				<Fontisto
+					name="favorite"
+					size={28}
+					color={favorito ? '#fad300' : 'white'}
+				/>
 			</TouchableOpacity>
 			<Image
 				source={require('../../assets/dog_card_1.png')}

@@ -23,7 +23,10 @@ export function MenuBottom() {
 				<Ionicons name="map" size={24} color="#333" />
 				<Text style={styles.bottomMenuItemText}>Mapa</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.bottomMenuItem}>
+			<TouchableOpacity
+				style={styles.bottomMenuItem}
+				onPress={() => navigate('FavoriteDogProfilePage' as never)}
+			>
 				<Ionicons name="heart" size={24} color="#333" />
 				<Text style={styles.bottomMenuItemText}>Favoritos</Text>
 			</TouchableOpacity>
