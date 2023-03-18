@@ -16,7 +16,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const availableHours = [
+interface Hour {
+	id: number;
+	day: string;
+	hour: string;
+	value: number;
+}
+
+const availableHours: Hour[] = [
 	{
 		id: 1,
 		day: 'segunda-feira',
@@ -37,13 +44,12 @@ const availableHours = [
 	},
 ];
 
-const calculateTotalHours = (items: any) => {
-	return items.reduce((total: any, item: any) => {
+const calculateTotalHours = (items: number[]): number => {
+	return items.reduce((total: number, item: number) => {
 		const hour = availableHours.find((h) => h.id === item);
-		return total + hour.value;
+		return hour ? total + hour.value : total;
 	}, 0);
 };
-
 export function RequestPage() {
 	const { navigate } = useNavigation();
 	const [checkedItems, setCheckedItems] = useState([]);

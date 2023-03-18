@@ -13,6 +13,7 @@ import { FilterModal } from '../../components/FilterModal';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 type Filters = {
 	gender?: string;
@@ -25,6 +26,7 @@ type Filters = {
 export function Home() {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [filters, setFilters] = useState<Filters>({});
+	const { navigate } = useNavigation();
 
 	const handleOpenModal = () => {
 		setIsModalVisible(true);
@@ -164,6 +166,13 @@ export function Home() {
 						<TouchableOpacity style={styles.bottomMenuItem}>
 							<Ionicons name="home" size={24} color="#333" />
 							<Text style={styles.bottomMenuItemText}>Home</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.bottomMenuItem}
+							onPress={() => navigate('Map' as never)}
+						>
+							<Ionicons name="map" size={24} color="#333" />
+							<Text style={styles.bottomMenuItemText}>Mapa</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.bottomMenuItem}>
 							<Ionicons name="heart" size={24} color="#333" />
