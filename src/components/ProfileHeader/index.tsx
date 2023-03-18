@@ -6,7 +6,30 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
+import * as ImagePicker from 'expo-image-picker';
+
 export function ProfileHeader({ banner, onBannerChange }: any) {
+	const pickImage = async () => {
+		const { status } =
+			await ImagePicker.requestMediaLibraryPermissionsAsync();
+		if (status !== 'granted') {
+			alert(
+				'A permissão para acessar a biblioteca de mídia é necessária.'
+			);
+			return;
+		}
+
+		const result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
+			allowsEditing: true,
+			quality: 1,
+		});
+
+		if (!result.canceled) {
+			onBannerChange(result.assets[0].uri);
+		}
+	};
+
 	return (
 		<View style={styles.container}>
 			<ImageBackground
@@ -16,7 +39,7 @@ export function ProfileHeader({ banner, onBannerChange }: any) {
 				style={styles.background}
 			>
 				<TouchableOpacity
-					onPress={onBannerChange}
+					onPress={pickImage}
 					style={styles.changeBannerIconWrapper}
 				>
 					<FontAwesome name="photo" size={40} color="white" />

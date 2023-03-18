@@ -5,7 +5,7 @@ import {
 	View,
 	StatusBar as RNStatusBar,
 	Platform,
-	ScrollView,
+	FlatList,
 	Image,
 	TouchableOpacity,
 } from 'react-native';
@@ -21,11 +21,13 @@ export function Profile() {
 		photo: 'https://www.github.com/pedrogiampietro.png',
 		dogs: [
 			{
+				id: 1,
 				name: 'Buddy',
 				breed: 'Labrador Retriever',
 				photo: require('../../assets/dog_card_1.png'),
 			},
 			{
+				id: 2,
 				name: 'Max',
 				breed: 'German Shepherd',
 				photo: require('../../assets/dog_card_1.png'),
@@ -34,12 +36,12 @@ export function Profile() {
 	});
 	const [banner, setBanner] = useState('');
 
-	const handleBannerChange = () => {
-		setBanner('');
+	const handleBannerChange = (uri: any) => {
+		setBanner(uri);
 	};
 
-	const renderDog = (dog: any, index: any) => (
-		<View key={index} style={styles.dog}>
+	const renderDog = (dog: any) => (
+		<View key={dog.id} style={styles.dog}>
 			<Image source={dog.photo} style={styles.dogPhoto} />
 			<View style={styles.dogInfo}>
 				<Text style={styles.dogName}>{dog.name}</Text>
@@ -58,50 +60,53 @@ export function Profile() {
 
 	return (
 		<View style={styles.container}>
-			<ScrollView>
-				<View style={styles.viewContainer}>
-					<ProfileHeader
-						banner={banner}
-						onBannerChange={handleBannerChange}
-					/>
-					<View style={styles.info}>
-						<View
-							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								alignItems: 'center',
-								gap: 15,
-							}}
-						>
-							<Image
-								source={{ uri: user.photo }}
-								style={styles.profile}
-							/>
-							<Text style={styles.name}>{user.name}</Text>
-						</View>
-
-						<Text style={styles.gray}>{user.email}</Text>
-
-						<HistoryProfile />
-
-						<Text style={styles.title}>My Dogs</Text>
-
-						<View style={styles.details}>
-							{user.dogs.map(renderDog)}
-
-							<TouchableOpacity
-								style={styles.addButton}
-								onPress={addDog}
+			<FlatList
+				data={[user]}
+				keyExtractor={(item) => item.email}
+				renderItem={({ item }) => (
+					<View style={styles.viewContainer}>
+						<ProfileHeader
+							banner={banner}
+							onBannerChange={handleBannerChange}
+						/>
+						<View style={styles.info}>
+							<View
+								style={{
+									display: 'flex',
+									flexDirection: 'row',
+									alignItems: 'center',
+									gap: 15,
+								}}
 							>
-								<Text style={styles.addButtonText}>
-									Criar novo perfil
-								</Text>
-							</TouchableOpacity>
+								<Image
+									source={{ uri: item.photo }}
+									style={styles.profile}
+								/>
+								<Text style={styles.name}>{item.name}</Text>
+							</View>
+
+							<Text style={styles.gray}>{item.email}</Text>
+
+							<HistoryProfile />
+
+							<Text style={styles.title}>My Dogs</Text>
+
+							<View style={styles.details}>
+								{item.dogs.map(renderDog)}
+
+								<TouchableOpacity
+									style={styles.addButton}
+									onPress={addDog}
+								>
+									<Text style={styles.addButtonText}>
+										Criar novo perfil
+									</Text>
+								</TouchableOpacity>
+							</View>
 						</View>
 					</View>
-				</View>
-			</ScrollView>
-
+				)}
+			/>
 			<MenuBottom />
 		</View>
 	);
