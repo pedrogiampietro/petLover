@@ -45,6 +45,8 @@ export function Home() {
 		setFilters(updatedFilters);
 	};
 
+	console.log('filters', filters);
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.viewContainer}>
@@ -57,10 +59,39 @@ export function Home() {
 					>
 						<View style={styles.filterButtonContainer}>
 							<AntDesign name="filter" size={28} color="black" />
-							{Object.keys(filters).length > 0 && (
+							{Object.keys(filters).reduce((count, key) => {
+								if (
+									((key === 'gender' ||
+										key === 'state' ||
+										key === 'searchTerm') &&
+										!filters[key]) ||
+									(key === 'priceRange' &&
+										filters[key][0] === 0 &&
+										filters[key][1] === 0)
+								) {
+									return count;
+								}
+								return count + 1;
+							}, 0) > 0 && (
 								<View style={styles.filterCount}>
 									<Text style={styles.filterCountText}>
-										{Object.keys(filters).length}
+										{Object.keys(filters).reduce(
+											(count, key) => {
+												if (
+													((key === 'gender' ||
+														key === 'state' ||
+														key === 'searchTerm') &&
+														!filters[key]) ||
+													(key === 'priceRange' &&
+														filters[key][0] === 0 &&
+														filters[key][1] === 0)
+												) {
+													return count;
+												}
+												return count + 1;
+											},
+											0
+										)}
 									</Text>
 								</View>
 							)}

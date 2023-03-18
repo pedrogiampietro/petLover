@@ -89,11 +89,29 @@ export function FilterModal({ isVisible, onClose, onApplyFilters }: any) {
 
 				<View
 					style={{
-						flex: 1,
-						justifyContent: 'flex-end',
+						flexDirection: 'row',
+						justifyContent: 'space-between',
 						width: '100%',
+						paddingHorizontal: 20,
+						paddingBottom: 20,
 					}}
 				>
+					<TouchableOpacity
+						onPress={() => {
+							setSearch('');
+							setState(null);
+							setPriceRange([0, 0]);
+							setGender(null);
+						}}
+						style={{
+							backgroundColor: '#E64C3C',
+							padding: 10,
+							borderRadius: 5,
+						}}
+					>
+						<Text style={{ color: 'white' }}>Limpar Filtros</Text>
+					</TouchableOpacity>
+
 					<TouchableOpacity
 						onPress={() => {
 							const filters = {
@@ -108,7 +126,7 @@ export function FilterModal({ isVisible, onClose, onApplyFilters }: any) {
 						style={{
 							backgroundColor: '#40B5A2',
 							padding: 20,
-							width: '100%',
+							borderRadius: 5,
 						}}
 					>
 						<Text style={{ color: 'white', textAlign: 'center' }}>
