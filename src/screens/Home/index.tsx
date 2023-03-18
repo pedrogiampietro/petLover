@@ -45,8 +45,6 @@ export function Home() {
 		setFilters(updatedFilters);
 	};
 
-	console.log('filters', filters);
-
 	return (
 		<View style={styles.container}>
 			<View style={styles.viewContainer}>
