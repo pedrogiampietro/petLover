@@ -9,6 +9,7 @@ import { DetailPage } from '../screens/DetailPage';
 import { RequestPage } from '../screens/RequestPage';
 import { Map } from '../screens/Map';
 import { FavoriteDogProfilePage } from '../screens/FavoritesPage';
+import { Profile } from '../screens/Profile';
 
 const AppStack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ const AuthRoutes: React.FC = () => (
 			name="FavoriteDogProfilePage"
 			component={FavoriteDogProfilePage}
 		/>
+		<AppStack.Screen name="Profile" component={Profile} />
 	</AppStack.Navigator>
 );
 
