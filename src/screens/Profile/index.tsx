@@ -8,7 +8,9 @@ import {
 	FlatList,
 	Image,
 	TouchableOpacity,
+	Button,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { MenuBottom } from '../../components/MenuBottom';
 import { HistoryProfile } from '../../components/HistoryProfile';
@@ -35,6 +37,7 @@ export function Profile() {
 		],
 	});
 	const [banner, setBanner] = useState('');
+	const { navigate } = useNavigation();
 
 	const handleBannerChange = (uri: any) => {
 		setBanner(uri);
@@ -46,9 +49,11 @@ export function Profile() {
 			<View style={styles.dogInfo}>
 				<Text style={styles.dogName}>{dog.name}</Text>
 				<Text style={styles.dogBreed}>{dog.breed}</Text>
-				<Text
-					style={styles.dogProfileLink}
-				>{`Acessar o perfil do animal ➔`}</Text>
+				<TouchableOpacity
+					onPress={() => navigate('DetailProfileAnimal' as never)}
+				>
+					<Text>Acessar o perfil do animal ➔</Text>
+				</TouchableOpacity>
 			</View>
 			<View style={styles.separator} />
 		</View>
@@ -199,10 +204,6 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		color: 'gray',
 		marginBottom: 5,
-	},
-	dogProfileLink: {
-		fontSize: 16,
-		color: 'blue',
 	},
 	separator: {
 		height: 1,

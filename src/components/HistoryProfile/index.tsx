@@ -44,7 +44,11 @@ export function HistoryProfile() {
 
 	return (
 		<View>
-			<Text>Histórico:</Text>
+			<Text
+				style={{ fontWeight: 'bold', marginVertical: 5, marginTop: 30 }}
+			>
+				Historico
+			</Text>
 			<FlatList
 				data={history}
 				keyExtractor={(item, index) => index.toString()}
