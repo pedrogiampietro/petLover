@@ -7,17 +7,20 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Job } from '../../contexts/BaseContext';
 
+const defaultImage =
+	'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80';
+
 export function Card(props: Job) {
 	const [favorite, setFavorite] = useState(false);
 
 	const { navigate } = useNavigation();
 
 	const handleDetailPage = () => {
-		navigate('DetailPage' as never, { id: props.id } as never);
+		navigate('DetailPage' as never, { data: props } as never);
 	};
 
 	const handleFavorito = () => {
-		setFavorito(!favorite);
+		setFavorite(!favorite);
 	};
 
 	return (
@@ -33,7 +36,9 @@ export function Card(props: Job) {
 				/>
 			</TouchableOpacity>
 			<Image
-				source={require('../../assets/dog_card_1.png')}
+				source={{
+					uri: props.animal.image ? props.animal.image : defaultImage,
+				}}
 				style={styles.image}
 			/>
 			<View style={styles.detailsContainer}>
@@ -42,13 +47,13 @@ export function Card(props: Job) {
 					<View style={styles.scheduleItem}>
 						<Text style={styles.scheduleItemLabel}>Idade:</Text>
 						<Text style={styles.scheduleItemValue}>
-							{props.animal.age}
+							{props.animal.age ? props.animal.age : '-'}
 						</Text>
 					</View>
 					<View style={styles.scheduleItem}>
 						<Text style={styles.scheduleItemLabel}>Raça:</Text>
 						<Text style={styles.scheduleItemValue}>
-							{props.animal.breed}
+							{props.animal.breed ? props.animal.breed : '-'}
 						</Text>
 					</View>
 				</View>

@@ -11,10 +11,43 @@ import {
 
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { capitalizeFirstLetter } from '../../utils/capitalize';
+
+const defaultImage =
+	'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80';
+
+interface JobParams {
+	data: {
+		animal: {
+			age: string;
+			breed: string;
+			color: string;
+			createdAt: string;
+			id: string;
+			image: string;
+			name: string;
+			ownerId: string;
+			sex: string;
+			size: string;
+			updatedAt: string;
+		};
+		location: string;
+		animalId: string;
+		createdAt: string;
+		id: string;
+		name: string;
+		offerType: string;
+		pricePerDay: number;
+		pricePerHour: number | null;
+		updatedAt: string;
+	};
+}
 
 export function DetailPage() {
 	const { navigate } = useNavigation();
+	const { params } = useRoute<RouteProp<Record<string, JobParams>, string>>();
+	const { data } = params;
 
 	return (
 		<View style={styles.container}>
@@ -22,7 +55,11 @@ export function DetailPage() {
 				<View style={styles.viewContainer}>
 					<View style={styles.header}>
 						<Image
-							source={require('../../assets/dog_card_1.png')}
+							source={{
+								uri: data.animal.image
+									? data.animal.image
+									: defaultImage,
+							}}
 							style={styles.background}
 						/>
 						<TouchableOpacity
@@ -40,7 +77,7 @@ export function DetailPage() {
 						</View>
 					</View>
 					<View style={styles.info}>
-						<Text style={styles.name}>Jean</Text>
+						<Text style={styles.name}>{data.animal.name}</Text>
 						<View
 							style={{
 								flexDirection: 'row',
@@ -52,30 +89,46 @@ export function DetailPage() {
 								<Text style={[styles.title, styles.gray]}>
 									Idade:
 								</Text>
-								<Text>4 months</Text>
+								<Text>
+									{data.animal.age ? data.animal.age : '-'}
+								</Text>
 							</View>
 							<View style={{ alignItems: 'center' }}>
 								<Text style={[styles.title, styles.gray]}>
 									Porte:
 								</Text>
-								<Text>P</Text>
+								<Text>
+									{data.animal.size
+										? capitalizeFirstLetter(
+												data.animal.size
+										  )
+										: '-'}
+								</Text>
 							</View>
 							<View style={{ alignItems: 'center' }}>
 								<Text style={[styles.title, styles.gray]}>
 									Sexo:
 								</Text>
-								<Text>Fêmea</Text>
+								<Text>
+									{data.animal.sex
+										? capitalizeFirstLetter(data.animal.sex)
+										: '-'}
+								</Text>
 							</View>
 						</View>
 
 						<Text style={[styles.title, styles.gray]}>
 							Localização:
 						</Text>
-						<Text>Rio de Janeiro</Text>
+						<Text>{data.location ? data.location : '-'}</Text>
 						<Text style={[styles.title, styles.gray]}>
 							Tipo de serviço:
 						</Text>
-						<Text>Caminhada</Text>
+						<Text>
+							{data.offerType === 'WALKING'
+								? 'Caminhada'
+								: 'Diária'}
+						</Text>
 						<Text style={[styles.title, styles.gray]}>
 							Horas/dias disponíveis:
 						</Text>
@@ -100,7 +153,11 @@ export function DetailPage() {
 							<Text style={[styles.title, styles.gray]}>
 								Valor por serviço
 							</Text>
-							<Text>R$ 12,00/hr</Text>
+							<Text>
+								{data.offerType === 'DAYCARE'
+									? `R$ ${data.pricePerDay}/dia`
+									: `R$ ${data.pricePerHour}/hora`}
+							</Text>
 						</View>
 
 						<View style={styles.details}>

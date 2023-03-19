@@ -18,9 +18,9 @@ export function FavoriteDogProfilePage() {
 
 				<ScrollView>
 					<View style={styles.card}>
-						{[1, 2].map((_, index) => {
+						{/* {[1, 2].map((_, index) => {
 							return <Card key={index} id={index} />;
-						})}
+						})} */}
 					</View>
 				</ScrollView>
 
