@@ -5,17 +5,19 @@ import { Feather } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
 
-export function Card({ id }: any) {
-	const [favorito, setFavorito] = useState(false);
+import { Job } from '../../contexts/BaseContext';
+
+export function Card(props: Job) {
+	const [favorite, setFavorite] = useState(false);
 
 	const { navigate } = useNavigation();
 
 	const handleDetailPage = () => {
-		navigate('DetailPage' as never, { id } as never);
+		navigate('DetailPage' as never, { id: props.id } as never);
 	};
 
 	const handleFavorito = () => {
-		setFavorito(!favorito);
+		setFavorito(!favorite);
 	};
 
 	return (
@@ -27,7 +29,7 @@ export function Card({ id }: any) {
 				<Fontisto
 					name="favorite"
 					size={28}
-					color={favorito ? '#fad300' : 'white'}
+					color={favorite ? '#fad300' : 'white'}
 				/>
 			</TouchableOpacity>
 			<Image
@@ -35,22 +37,36 @@ export function Card({ id }: any) {
 				style={styles.image}
 			/>
 			<View style={styles.detailsContainer}>
-				<Text style={styles.name}>Nome do local</Text>
-				<Text style={styles.schedule}>
-					Segunda à sexta: 8h às 18h {'\n'}
-					Sábado e domingo: 10h às 16h
-				</Text>
+				<Text style={styles.name}>{props.name}</Text>
+				<View style={styles.schedule}>
+					<View style={styles.scheduleItem}>
+						<Text style={styles.scheduleItemLabel}>Idade:</Text>
+						<Text style={styles.scheduleItemValue}>
+							{props.animal.age}
+						</Text>
+					</View>
+					<View style={styles.scheduleItem}>
+						<Text style={styles.scheduleItemLabel}>Raça:</Text>
+						<Text style={styles.scheduleItemValue}>
+							{props.animal.breed}
+						</Text>
+					</View>
+				</View>
 				<View style={styles.servicesContainer}>
 					<TouchableOpacity style={styles.serviceIconContainer}>
-						{/* sun or walking */}
-						{/* <Fontisto name="paw" size={18} color="black" /> */}
-						<Feather name="sun" size={18} color="black" />
+						{props.offerType === 'DAYCARE' ? (
+							<Fontisto name="paw" size={18} color="black" />
+						) : (
+							<Feather name="sun" size={18} color="black" />
+						)}
 					</TouchableOpacity>
 					<Text style={[styles.service, { flex: 1 }]}>
-						Dog walking
+						{props.offerType === 'DAYCARE' ? 'Diária' : 'Caminhada'}
 					</Text>
 					<Text style={[styles.price, { textAlign: 'right' }]}>
-						R$ 50,00/hora
+						{props.offerType === 'DAYCARE'
+							? `R$ ${props.pricePerDay}/dia`
+							: `R$ ${props.pricePerHour}/hora`}
 					</Text>
 				</View>
 			</View>
@@ -92,9 +108,22 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 	},
 	schedule: {
-		color: '#fff',
-		fontSize: 14,
+		flexDirection: 'row',
+	},
+	scheduleItem: {
+		flexDirection: 'row',
+		marginRight: 20,
 		marginBottom: 10,
+	},
+	scheduleItemLabel: {
+		fontSize: 16,
+		color: '#fff',
+		fontWeight: 'bold',
+		marginRight: 5,
+	},
+	scheduleItemValue: {
+		fontSize: 16,
+		color: '#fff',
 	},
 	servicesContainer: {
 		flexDirection: 'row',

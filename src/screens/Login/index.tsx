@@ -20,7 +20,6 @@ import { Loading } from '../../components/Loading';
 import { useAuth } from '../../hooks/useAuth';
 import { validateEmail, validatePassword } from '../../utils/validators';
 import { useAlert } from '../../hooks/useAlert';
-// import { useAlert } from '../../../hooks/useAlert';
 
 export function Login() {
 	const { navigate } = useNavigation();
@@ -61,7 +60,6 @@ export function Login() {
 		try {
 			setLoading(true);
 			await login(email, password);
-			// navigate('Home' as never);
 		} catch (err: any) {
 			console.error(err);
 		} finally {
@@ -70,14 +68,7 @@ export function Login() {
 	};
 
 	const onResendConfirmationCode = async () => {
-		// if (!validateEmail(email)) {
-		// 	showAlert({
-		// 		title: 'Dados inválidos',
-		// 		message: 'Insira um e-mail válido',
-		// 	});
-
-		// 	return;
-		// }
+		// validar e-mail
 
 		setLoading(true);
 

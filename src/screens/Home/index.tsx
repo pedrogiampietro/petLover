@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MenuBottom } from '../../components/MenuBottom';
+import { useBaseData } from '../../hooks/useBaseData';
 
 type Filters = {
 	gender?: string;
@@ -26,6 +27,7 @@ type Filters = {
 export function Home() {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [filters, setFilters] = useState<Filters>({});
+	const { jobs } = useBaseData();
 
 	const handleOpenModal = () => {
 		setIsModalVisible(true);
@@ -172,8 +174,8 @@ export function Home() {
 				</View>
 				<ScrollView>
 					<View style={styles.card}>
-						{[1, 2, 3, 4].map((_, index) => {
-							return <Card key={index} id={index} />;
+						{jobs.map((job) => {
+							return <Card key={job.id} {...job} />;
 						})}
 					</View>
 				</ScrollView>
