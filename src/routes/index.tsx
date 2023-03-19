@@ -1,43 +1,36 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View, ActivityIndicator } from 'react-native';
 
-import { SlideIntroduction } from '../screens/SlideIntroduction';
-import { Login } from '../screens/Login';
-import { Home } from '../screens/Home';
-import { Register } from '../screens/Register';
-import { DetailPage } from '../screens/DetailPage';
-import { RequestPage } from '../screens/RequestPage';
-import { Map } from '../screens/Map';
-import { FavoriteDogProfilePage } from '../screens/FavoritesPage';
-import { Profile } from '../screens/Profile';
-import { DetailProfileAnimal } from '../screens/DetailProfileAnimal';
+import { useAuth } from '../hooks/useAuth';
 
-const AppStack = createNativeStackNavigator();
+import AuthRoutes from './auth.routes';
+import AppRoutes from './app.routes';
 
-const AuthRoutes: React.FC = () => (
-	<AppStack.Navigator
-		initialRouteName="Intro"
-		screenOptions={{
-			headerShown: false,
-		}}
-	>
-		<AppStack.Screen name="Intro" component={SlideIntroduction} />
-		<AppStack.Screen name="Login" component={Login} />
-		<AppStack.Screen name="Register" component={Register} />
-		<AppStack.Screen name="Home" component={Home} />
-		<AppStack.Screen name="DetailPage" component={DetailPage} />
-		<AppStack.Screen name="RequestPage" component={RequestPage} />
-		<AppStack.Screen name="Map" component={Map} />
-		<AppStack.Screen
-			name="FavoriteDogProfilePage"
-			component={FavoriteDogProfilePage}
-		/>
-		<AppStack.Screen name="Profile" component={Profile} />
-		<AppStack.Screen
-			name="DetailProfileAnimal"
-			component={DetailProfileAnimal}
-		/>
-	</AppStack.Navigator>
-);
+import { useNavigation } from '@react-navigation/native';
 
-export default AuthRoutes;
+const Routes: React.FC = () => {
+	const { user, loading } = useAuth();
+	const { navigate } = useNavigation();
+
+	if (loading) {
+		return (
+			<View
+				style={{
+					flex: 1,
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}
+			>
+				<ActivityIndicator size="large" color="#666" />
+			</View>
+		);
+	}
+
+	if (!user) {
+		navigate('Intro' as never);
+	}
+
+	return user ? <AuthRoutes /> : <AppRoutes />;
+};
+
+export default Routes;

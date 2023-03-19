@@ -17,12 +17,15 @@ import theme from '../../styles/theme';
 
 import { useNavigation } from '@react-navigation/native';
 import { Loading } from '../../components/Loading';
-
+import { useAuth } from '../../hooks/useAuth';
+import { validateEmail, validatePassword } from '../../utils/validators';
+import { useAlert } from '../../hooks/useAlert';
 // import { useAlert } from '../../../hooks/useAlert';
 
 export function Login() {
 	const { navigate } = useNavigation();
-	// const { showAlert } = useAlert();
+	const { login } = useAuth();
+	const { showAlert } = useAlert();
 
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
@@ -36,20 +39,29 @@ export function Login() {
 	};
 
 	const onLogin = async () => {
-		// if (!validateEmail(email) || !validatePassword(password)) {
-		// 	showAlert({
-		// 		title: 'Dados inválidos',
-		// 		message: 'E-mail ou senha inválidos',
-		// 	});
+		if (!validateEmail(email)) {
+			showAlert({
+				title: 'E-mail inválido',
+				message: 'Por favor entre com um e-mail válido',
+			});
 
-		// 	return;
-		// }
+			return;
+		}
 
-		setLoading(true);
+		if (!validatePassword(password)) {
+			showAlert({
+				title: 'Senha inválida',
+				message:
+					'A senha deve conter pelo menos 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula e um número.',
+			});
+
+			return;
+		}
 
 		try {
-			// await signIn(email, password);
-			navigate('Home' as never);
+			setLoading(true);
+			await login(email, password);
+			// navigate('Home' as never);
 		} catch (err: any) {
 			console.error(err);
 		} finally {
