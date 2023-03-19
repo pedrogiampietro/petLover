@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
+import { StyleSheet, View } from 'react-native';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 import { useNavigation } from '@react-navigation/native';
 import { MenuBottom } from '../../components/MenuBottom';
@@ -81,31 +81,7 @@ export function Map() {
 									: '#40B5A2'
 							}
 							onPress={() => handleOnMarkerPress(animal)}
-						>
-							{selectedAnimal?.id === animal.id && (
-								<Callout
-									onPress={() => setSelectedAnimal(null)}
-								>
-									<View style={styles.calloutContainer}>
-										<Image
-											source={{ uri: animal.image }}
-											style={styles.calloutImage}
-											resizeMode="contain"
-										/>
-										<View style={styles.calloutInfo}>
-											<Text style={styles.calloutTitle}>
-												{animal.name}
-											</Text>
-											<Text
-												style={styles.calloutSubtitle}
-											>
-												{animal.type}
-											</Text>
-										</View>
-									</View>
-								</Callout>
-							)}
-						</Marker>
+						></Marker>
 					))}
 				</MapView>
 			</View>

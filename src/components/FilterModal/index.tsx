@@ -92,6 +92,7 @@ export function FilterModal({ isVisible, onClose, onApplyFilters }: any) {
 						flexDirection: 'row',
 						justifyContent: 'space-between',
 						width: '100%',
+						marginVertical: 15,
 						paddingHorizontal: 20,
 						paddingBottom: 20,
 					}}
@@ -103,11 +104,7 @@ export function FilterModal({ isVisible, onClose, onApplyFilters }: any) {
 							setPriceRange([0, 0]);
 							setGender(null);
 						}}
-						style={{
-							backgroundColor: '#E64C3C',
-							padding: 10,
-							borderRadius: 5,
-						}}
+						style={[styles.button, { backgroundColor: '#E64C3C' }]}
 					>
 						<Text style={{ color: 'white' }}>Limpar Filtros</Text>
 					</TouchableOpacity>
@@ -123,15 +120,9 @@ export function FilterModal({ isVisible, onClose, onApplyFilters }: any) {
 							onApplyFilters(filters);
 							onClose();
 						}}
-						style={{
-							backgroundColor: '#40B5A2',
-							padding: 20,
-							borderRadius: 5,
-						}}
+						style={[styles.button, { backgroundColor: '#40B5A2' }]}
 					>
-						<Text style={{ color: 'white', textAlign: 'center' }}>
-							Aplicar Filtros
-						</Text>
+						<Text style={{ color: 'white' }}>Aplicar Filtros</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -165,5 +156,13 @@ const styles = StyleSheet.create({
 		fontSize: 24,
 		fontWeight: 'bold',
 		marginVertical: 20,
+	},
+	button: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		width: '45%',
+		padding: 20,
+		borderRadius: 5,
 	},
 });
