@@ -4,7 +4,10 @@ import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 
-import { NavigationContainer } from '@react-navigation/native';
+import {
+	NavigationContainer,
+	createNavigationContainerRef,
+} from '@react-navigation/native';
 import { Loading } from './components/Loading';
 
 import Routes from './routes';
@@ -18,6 +21,8 @@ import {
 } from '@expo-google-fonts/poppins';
 
 export function App() {
+	const navigationRef = createNavigationContainerRef();
+
 	const [fontLoaded] = useFonts({
 		Poppins_400Regular,
 		Poppins_500Medium,
@@ -26,7 +31,7 @@ export function App() {
 
 	return (
 		<>
-			<NavigationContainer>
+			<NavigationContainer ref={navigationRef}>
 				<ThemeProvider theme={theme}>
 					{fontLoaded ? (
 						<AuthProvider>

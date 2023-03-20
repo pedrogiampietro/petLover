@@ -137,13 +137,13 @@ export function Login() {
 										<Feather
 											name="eye-off"
 											size={18}
-											color="#FFF"
+											color="#333"
 										/>
 									) : (
 										<Feather
 											name="eye"
 											size={18}
-											color="#FFF"
+											color="#333"
 										/>
 									)}
 								</TouchableOpacity>
